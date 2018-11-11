@@ -12,5 +12,5 @@ ImageMaker
 Pathfinder
     - find coordinates
     - set current coordinates
-    - check adjacent coordinates
+    - check adjacent coordinates, choose one
     - update current coordinates

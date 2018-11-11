@@ -2,9 +2,6 @@ from PIL import Image, ImageDraw
 
 class Map:
     def __init__(self, name):
-        '''
-        
-        '''
         self.name = name
 
 
@@ -17,8 +14,9 @@ class Map:
                 # makes a float and removes white space... 
                 # for each item in the list... 
                 # in the array
-            elevation_map = [[float(
-                smaller_thing) for smaller_thing in thing.split()] for thing in file.readlines()] 
+            elevation_map = [[float(smaller_thing) 
+                for smaller_thing in thing.split()] 
+                for thing in file.readlines()] 
 
             # find the minimum 
             min_list = [min(row) for row in elevation_map]
@@ -35,22 +33,12 @@ class Map:
             # for each item in the list...
             # in the array
             color_code_map = [[int(
-                (((each - min_elevation)/(max_elevation - min_elevation))*255)) for each in num_list] for num_list in elevation_map]
+                (((each - min_elevation)/(max_elevation - min_elevation))*255)
+                ) 
+                for each in num_list] 
+                for num_list in elevation_map]
         return color_code_map    
-
-    def find_single_path(self, file):
-        '''
-        finds a 'greedy' path across the map horozontally
-        '''
-        # use min() and abs()
-        # set current coordinates
-        # look at the next 3 choices and choose one
-        # reset the current coordinates to the choice
-        # repeate until out of choices
-        # deal with 'edge' conditions
     
-
-
     def make_new_image(self, color_code_map):
         # get the height
         # get the width
@@ -76,41 +64,38 @@ class Map:
             for x, num in enumerate(row):
                 new_image.putpixel((x,y), (num, num, num))   
         # might have to make save a function
-        return new_image.save(self.name)            
+        # return new_image.save(self.name)
+        return new_image           
     
-    # take 'save' out of make_height_map_png
-    # def save_png(self, file):
-    #     file.save(self.name)
+    def single_path(self, file):
+        # get data for coordinates
+        color_file = self.make_color_code_map(file)
+        # find the half way point for y value
+        y_half_height = len(color_file) / 2
+        y = int(y_half_height)
+        # grab the image to draw on
+        image_to_draw_on = self.make_height_map_png(file)
+        #try to draw a line across the map
+        x = 0
+        for _, row in enumerate(color_file):
+            for x, num in enumerate(row):
 
-class Pathfinder:
-    # use min() and abs()
-    
-    # looks at the next 3 choices and chooses one
-    # resets the current coordinates to the choice
-    # repeates until out of choices
-    # deals with 'edge' conditions
-    def __init__(self):
-        pass
+                image_to_draw_on.putpixel((x, y), (255, 0, 0))
 
-    # sets current coordinates
-    def half_way_down(self, map):
+        return image_to_draw_on
+
+
+    def save_png(self, file):
         '''
-        takes map data and finds the half way down y value
+        saves files after they pass throuhg make_height_map
         '''
-        # look at the amount of rows and divide by half
-        half_way_down = len(map)/2
-        return half_way_down
-    
-    
+        file.save(self.name)
 
-
-
-
-map = Map("maps/test_small_test_altered_new_image.png") 
-color_map = map.make_color_code_map("elevation_small.txt")
-finder = Pathfinder()
-print(finder.half_way_down(color_map))
-# map.make_height_map_png('elevation_small.txt')
+map = Map("small_map4.png")
+# height_map_png =  map.make_height_map_png('elevation_small.txt')
+single_path = map.single_path("elevation_small.txt")
+# => pathfinder gets called here
+map.save_png(single_path)
 
 
 

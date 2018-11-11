@@ -42,3 +42,53 @@ def make_height_map_png(self, file):
                 test.putpixel((x,y), (num, num, num))   
         return test.save(self.name)
 ```
+
+completely failed attempt
+
+```py
+class Pathfinder:
+    def __init__(self):
+        pass
+
+    
+    def y_half_way(self, map):
+        '''
+        takes map data and finds the half way down 'y' value
+        '''
+        # look at the amount of rows and divide by half
+        y = len(map)/2
+        return y
+
+    def top_choice(self, x, y):
+        y += 1 
+        x_y = []
+        x_y.append(x, y)
+        return x_y
+    
+    def mid_choice(self, x, y):
+        x += 1 
+        return x
+
+    def bot_choice(self, x, y): 
+        y -= 1 
+        return y
+
+    def simple_pathfinder(self, map, x, y):
+        '''
+        looks at the next 3 coordinates and chooses one
+        '''
+        
+        t_y = self.top_choice(x, y)
+        m_y =self.mid_choice(x, y)
+        b_y =self.bot_choice(x, y)
+        # take these and put them in a list
+        choice_list = [t_y, m_y, b_y]
+
+        
+        # find minium after checking the absolute value of each item in list
+        # min(new_list, key = abs)
+        # if top and bottom are the same pick random
+        # resets the current coordinates to the choice
+        # repeates until out of choices
+        # deals with 'edge' conditions
+```
