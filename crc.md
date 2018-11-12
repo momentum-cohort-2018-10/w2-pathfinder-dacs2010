@@ -5,7 +5,7 @@ DatdaConverter
     - convert height map to color map
 
 ImageMaker 
-    - make new image
+    - make new image(with name)
     - draw image from color map
     - save image
 

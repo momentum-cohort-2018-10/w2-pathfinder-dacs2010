@@ -40,6 +40,9 @@ class Map:
         return color_code_map    
     
     def make_new_image(self, color_code_map):
+        '''
+        makes new image, and finds height and width
+        '''
         # get the height
         # get the width
         # make new image
@@ -66,24 +69,49 @@ class Map:
         # might have to make save a function
         # return new_image.save(self.name)
         return new_image           
-    
+
+    def node_finder(self, current_node, num):
+        x = current_node[0]
+        # remove x...
+        current_node.pop(0)
+        # insert new x at the 0 index
+        current_node.insert(0, x)
+        # now i have to try to find the new y values
+        y = current_node[1]
+        # and then get the num for each of those values
+
+        # print the number associated with the y value
+
     def single_path(self, file):
+        '''
+        draw a greedy line across the map
+        '''
         # get data for coordinates
         color_file = self.make_color_code_map(file)
         # find the half way point for y value
         y_half_height = len(color_file) / 2
         y = int(y_half_height)
+
+        x = 0
+        current_node = [x, y]
+        print(current_node)
         # grab the image to draw on
         image_to_draw_on = self.make_height_map_png(file)
-        #try to draw a line across the map
-        x = 0
         for _, row in enumerate(color_file):
             for x, num in enumerate(row):
-
-                image_to_draw_on.putpixel((x, y), (255, 0, 0))
-
+                # remove x...
+                current_node.pop(0)
+                # insert new x at the 0 index
+                current_node.insert(0,x)
+                # now i have to try to find the new y values
+                # and then get the num for each of those values
+                # for coordinate in 
+                # for y in current_node[1]:
+                # print the number associated with the y value
+                
+                # draw line
+                image_to_draw_on.putpixel((current_node), (255, 0, 0))
         return image_to_draw_on
-
 
     def save_png(self, file):
         '''
@@ -91,7 +119,7 @@ class Map:
         '''
         file.save(self.name)
 
-map = Map("small_map4.png")
+map = Map("maps/small_map7.png")
 # height_map_png =  map.make_height_map_png('elevation_small.txt')
 single_path = map.single_path("elevation_small.txt")
 # => pathfinder gets called here

@@ -60,10 +60,8 @@ class Pathfinder:
         return y
 
     def top_choice(self, x, y):
-        y += 1 
-        x_y = []
-        x_y.append(x, y)
-        return x_y
+        return x += 1, y += 1
+       
     
     def mid_choice(self, x, y):
         x += 1 
